@@ -32,11 +32,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="name" value="<%= students[i].name %>"/>
+                        <input type="text" class="form-control" id="recipient-name" name="name" value="<%= students[i].name %>" required/>
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Collage:</label>
-                        <input class="form-control" id="message-text" name="collage" value="<%= students[i].collage %>"></input>
+                        <input class="form-control" id="message-text" name="collage" value="<%= students[i].collage %>" required></input>
                     </div>
                     <% if (path.includes("/students/")) { %>
                     <div class="mb-3">
@@ -70,15 +70,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">DSA Final Score:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="dsaFinalScore" value="<%= students[i].dsaFinalScore %>"/>
+                        <input type="text" class="form-control" id="recipient-name" name="dsaFinalScore" value="<%= students[i].dsaFinalScore %>" required/>
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">WebD Final Score:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="webDFinalScore" value="<%= students[i].webDFinalScore %>"/>
+                        <input type="text" class="form-control" id="recipient-name" name="webDFinalScore" value="<%= students[i].webDFinalScore %>" required/>
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">React Final Score:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="reactFinalScore" value="<%= students[i].reactFinalScore %>"/>
+                        <input type="text" class="form-control" id="recipient-name" name="reactFinalScore" value="<%= students[i].reactFinalScore %>" required/>
                     </div>
                 </form>
             </div>
