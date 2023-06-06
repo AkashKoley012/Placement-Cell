@@ -1,0 +1,10 @@
+<% for( let i = 0; i < interviews.length; i++ ) { %>
+<div class="card m-3" style="width: 18rem">
+    <img src="/img/img_avatar<%= i%2 %>.png" class="card-img-top" alt="..." />
+    <div class="card-body text-center">
+        <h5 class="card-title"><%= interviews[i].company %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= interviews[i].date.toString().substr(0, 15) %></h6>
+        <a href="/students/<%= interviews[i].id %>" class="btn btn-dark">Students</a>
+    </div>
+</div>
+<% } %>

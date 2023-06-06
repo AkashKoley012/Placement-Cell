@@ -1,0 +1,92 @@
+<% for( let i = 0; i < students.length; i++ ) { %>
+<div class="card m-3" style="width: 18rem">
+    <img src="/img/img_avatar<%= i%2 %>.png" class="card-img-top" alt="..." />
+    <a href="/students/data/<%= students[i].id %>" class="btn btn-dark">Download</a>
+    <% if (path.includes("/students/")) { %>
+        <% if (students[i].result) { %>
+            <div class="inerview-status position-absolute end-0 mt-3 me-3 text-light bg-<% if (students[i].result === "PASS") { %>success 
+                <% } else if (students[i].result === "FAIL") { %>danger
+                <% } else if (students[i].result === "On Hold") { %>warning
+                <% } else { %>secondary <% } %>
+                    px-3 shadow-lg rounded-pill"><%= students[i].result %></div>
+            <% } %>
+        <% } %>
+    <div class="card-body text-center">
+        <h5 class="card-title"><%= students[i].name %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= students[i].collage %></h6>
+        <a href="/interviews/<%= students[i].id %>" class="btn btn-dark">Interviews</a>
+        <a href="/students/update/<%= students[i].id %>" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#Modal<%= students[i].id %>" data-bs-whatever="@mdo">Update</a>
+    </div>
+</div>
+<div class="modal fade" id="Modal<%= students[i].id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/students/update/<%= students[i].id %>" method="post" id="<%= students[i].id %>">
+                    <div class="mb-3">
+                        <input type="text" class="d-none form-control" id="recipient-name" name="interviewId" value=<%= interviewId %>/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="name" value="<%= students[i].name %>"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Collage:</label>
+                        <input class="form-control" id="message-text" name="collage" value="<%= students[i].collage %>"></input>
+                    </div>
+                    <% if (path.includes("/students/")) { %>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Result:</label>
+                        <select class="form-select" aria-label="Default select example" name="result">
+                            <option value="PASS" <% if (students[i].result === "PASS") { %>
+                                selected
+                            <% } %>>PASS</option>
+                            <option value="FAIL" <% if (students[i].result === "FAIL") { %>
+                                selected
+                            <% } %> >FAIL</option>
+                            <option value="On Hold" <% if (students[i].result === "On Hold") { %>
+                                selected
+                            <% } %> >On Hold</option>
+                            <option value="Didn’t Attempt" <% if (students[i].result === "Didn’t Attempt") { %>
+                                selected
+                            <% } %> >Didn’t Attempt</option> 
+                          </select>
+                    </div>
+                    <% } %>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Status:</label>
+                        <select class="form-select" aria-label="Default select example" name="status">
+                            <option value="Placed" <% if (students[i].status === "Placed") { %>
+                                selected
+                            <% } %>>Placed</option>
+                            <option value="Not Placed" <% if (students[i].status === "Not Placed") { %>
+                                selected
+                            <% } %> >Not Placed</option>
+                          </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">DSA Final Score:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="dsaFinalScore" value="<%= students[i].dsaFinalScore %>"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">WebD Final Score:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="webDFinalScore" value="<%= students[i].webDFinalScore %>"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">React Final Score:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="reactFinalScore" value="<%= students[i].reactFinalScore %>"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="<%= students[i].id %>">Update Student</button>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>

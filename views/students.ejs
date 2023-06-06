@@ -1,0 +1,10 @@
+<body>
+    <%- include('partials/navbar.ejs') %>
+    <div class="d-flex">
+        <%- include('partials/studentCard.ejs') %>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#studentModal" data-bs-whatever="@mdo" class="card m-3" style="width: 18rem">
+            <img src="/img/add.svg" class="card-img-top my-auto" alt="..." />
+        </button>
+    </div>
+    <%- include('partials/studentModal.ejs') %>
+</body>
