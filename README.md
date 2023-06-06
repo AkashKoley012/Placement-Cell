@@ -1,7 +1,7 @@
 # Placement-Cell
 ### This is hosted link https://placement-cell-production-9c1c.up.railway.app/
 ## Install
- $ git clone https://github.com/YOUR_USERNAME/PROJECT_TITLE
+ $ git clone https://github.com/AkashKoley012/Placement-Cell.git
  
  $ cd PROJECT_TITLE
  
