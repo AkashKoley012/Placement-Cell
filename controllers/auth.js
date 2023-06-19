@@ -1,4 +1,5 @@
 const Employee = require("../models/Employee"); // Replace with your Employee model
+const CryptoJS = require("crypto-js");
 
 exports.signupForm = (req, res) => {
     return res.render("signup"); // Render the signup form view
@@ -7,11 +8,12 @@ exports.signupForm = (req, res) => {
 exports.signup = async (req, res) => {
     try {
         // Create a new employee
-        const { email, password, repPassword } = req.body;
+        let { email, password, repPassword } = req.body;
         if (password !== repPassword) {
             req.flash("error", "Password does not match");
             return res.redirect("back");
         }
+        password = CryptoJS.AES.encrypt(password, process.env.SECRECT_KEY);
         const employee = await Employee.create({ username: email, password: password });
         return res.redirect("/signin"); // Redirect to the sign-in page
     } catch (error) {
@@ -33,7 +35,13 @@ exports.signin = async (req, res) => {
         const { email, password } = req.body;
         // Find the employee by username and verify the password
         const employee = await Employee.findOne({ username: email });
-        if (!employee || employee.password !== password) {
+        if (!employee) {
+            req.flash("error", "Invalid username or password");
+            return res.redirect("back");
+        }
+        const hashedPassword = CryptoJS.AES.decrypt(employee.password, process.env.SECRECT_KEY);
+        const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+        if (originalPassword !== password) {
             req.flash("error", "Invalid username or password");
             return res.redirect("back");
         }
@@ -47,7 +55,6 @@ exports.signin = async (req, res) => {
             error: {
                 status: 500,
                 message: error.message,
-                // message: "Failed to sign in",
             },
         });
     }

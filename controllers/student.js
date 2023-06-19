@@ -14,7 +14,8 @@ module.exports.all = async (req, res) => {
             let scores = await CourseScores.findOne({ student: students[i].id });
             if (scores) {
                 students[i].dsaFinalScore = scores.dsaFinalScore;
-                (students[i].webDFinalScore = scores.webDFinalScore), (students[i].reactFinalScore = scores.reactFinalScore);
+                students[i].webDFinalScore = scores.webDFinalScore;
+                students[i].reactFinalScore = scores.reactFinalScore;
             }
         }
         return res.render("students", {
@@ -43,10 +44,11 @@ module.exports.allId = async (req, res) => {
             let scores = await CourseScores.findOne({ student: interview.students[i].id });
             if (scores) {
                 interview.students[i].dsaFinalScore = scores.dsaFinalScore;
-                (interview.students[i].webDFinalScore = scores.webDFinalScore), (interview.students[i].reactFinalScore = scores.reactFinalScore);
+                interview.students[i].webDFinalScore = scores.webDFinalScore;
+                interview.students[i].reactFinalScore = scores.reactFinalScore;
             }
         }
-        console.log(interviewId);
+        // console.log(interviewId);
         return res.render("students", {
             interviewId: interviewId,
             students: interview.students,
@@ -65,10 +67,7 @@ module.exports.allId = async (req, res) => {
 // Controller to add a new student
 module.exports.create = async (req, res) => {
     try {
-        let student = await Student.findOne({
-            name: req.body.name,
-            collage: req.body.collage,
-        });
+        let student = await Student.findOne({ email: req.body.email });
         if (!student) student = await Student.create(req.body);
         return res.redirect(req.originalUrl);
     } catch (error) {
@@ -87,14 +86,12 @@ module.exports.update = async (req, res) => {
         let interviewId = req.params.id;
         let interview = await Interview.findById(interviewId);
         if (!interview) return res.status(401).json({ message: "Interview Not Found" });
-        let student = await Student.findOne({
-            name: req.body.name,
-            collage: req.body.collage,
-        });
+        let student = await Student.findOne({ email: req.body.email });
         if (!student)
             student = await Student.create({
                 name: req.body.name,
                 collage: req.body.collage,
+                email: req.body.email,
                 status: req.body.status,
             });
         interview = await Interview.findByIdAndUpdate(interviewId, { $addToSet: { students: student.id } }, { new: true });
